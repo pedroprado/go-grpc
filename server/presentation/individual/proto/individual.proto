@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = "pedro.prado.grpc.server.example/presentation/proto";
+
+service IndividualService{
+    rpc GetIndividual(GetQuery) returns (Individual){}
+
+    rpc CreateIndividual(Individual) returns (Individual){}
+
+    rpc UpdateIndividual(Individual) returns (Individual){}
+
+    rpc ListIndividuals(ListQuery) returns (Individuals){}
+}
+
+message GetQuery{
+    string id = 1;
+}
+
+message ListQuery {
+    string id = 1;
+}
+
+message Individual{
+    string id = 1;
+    string name = 2;
+    string dateOfBirth = 3;
+    string nationality = 4;
+}
+
+message Individuals{
+    repeated Individual individuals = 1;
+}
