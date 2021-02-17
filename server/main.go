@@ -5,6 +5,11 @@ import (
 	"log"
 	"net"
 
+	"pedro.prado.grpc.server.example/presentation/individual/proto"
+
+	individualService "pedro.prado.grpc.server.example/core/useCases/individual"
+	individualGrpcService "pedro.prado.grpc.server.example/presentation/individual"
+
 	"google.golang.org/grpc"
 	pb "pedro.prado.grpc.server.example/infra/grpc/protoFile"
 	"pedro.prado.grpc.server.example/infra/grpc/server"
@@ -34,14 +39,18 @@ func main() {
 
 	grpcService := server.NewGrpcSevice(savedFeatures, routeNotes)
 
+	individualServiceInstance := individualService.New(nil)
+	individualGrpcServiceInstance := individualGrpcService.New(individualServiceInstance)
+
 	var opts []grpc.ServerOption
-	grpcNewServer := grpc.NewServer(opts...)
-	pb.RegisterRouteGuideServer(grpcNewServer, grpcService)
+	newGrpcServer := grpc.NewServer(opts...)
+	pb.RegisterRouteGuideServer(newGrpcServer, grpcService)
+	proto.RegisterIndividualServiceServer(newGrpcServer, individualGrpcServiceInstance)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", 8950))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	grpcNewServer.Serve(lis)
+	newGrpcServer.Serve(lis)
 }
