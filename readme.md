@@ -29,7 +29,7 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 
 ### 1.3.Implement the server interface
 
-* In the _grpc.pb file there is an inteface with name **<<ProtoServiceName>>Server**, where **<<ProtoServiceName>>** is the name of the service defined in the .proto file. 
+* In the _grpc.pb file there is an inteface with name **<ProtoServiceName>Server**, where **<ProtoServiceName>** is the name of the service defined in the .proto file. 
 
 * This interface must be implemented and is used by grpc Server for exposing the methods for clients
 
@@ -40,14 +40,14 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 * In go you must:
     * create a **service** instance of the ProtoServiceNameServer interface (that you implemented)
     * create a **server** with grpc.NewServer
-    * register the service using the server and the service with the function **Register<<ProtoServiceName>>Server** (in the file _grpc.pb), which takes both **grpc server** and the **service interface** as arguments
+    * register the service using the server and the service with the function **Register<ProtoServiceName>Server** (in the file _grpc.pb), which takes both **grpc server** and the **service interface** as arguments
     * run the server (server.Serve)
 
 ## 2.Create a gRPC client
 
 ### 2.1.Create a client
 
-* use the function **New<<ProtoServiceName>>Client** (in the file _grpc.pb)
+* use the function **New<ProtoServiceName>Client** (in the file _grpc.pb)
 
 * use this client for calling the methods of the Service interface
 
